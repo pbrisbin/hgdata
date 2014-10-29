@@ -91,7 +91,8 @@ import Data.Time.Clock.POSIX (utcTimeToPOSIXSeconds)
 import Data.Word (Word64)
 import Network.Google (makeHeaderName)
 import Network.HTTP.Base (urlEncode)
-import Network.HTTP.Client (Request(..), RequestBody(..), Response(..), defaultManagerSettings, httpLbs, responseBody, withManager)
+import Network.HTTP.Client (Request(..), RequestBody(..), Response(..), httpLbs, responseBody, withManager)
+import Network.HTTP.Client.TLS (tlsManagerSettings)
 import Text.JSON (JSObject, JSValue(JSRational), Result(Ok), decode, valFromObj)
 import System.Info    (os)
 import System.Process (rawSystem)
@@ -263,7 +264,7 @@ doOAuth2 client grantType extraBody =
             ++ "&grant_type=" ++ grantType
             ++ extraBody
         }
-    response <- withManager defaultManagerSettings $ httpLbs request
+    response <- withManager tlsManagerSettings $ httpLbs request
     let
       (Ok result) = decode . toString $ responseBody response
     return result
@@ -285,7 +286,7 @@ validateTokens tokens =
         , path = BS8.pack "/oauth2/v1/tokeninfo"
         , queryString = BS8.pack ("?access_token=" ++ accessToken tokens)
         }
-    response <- withManager defaultManagerSettings $ httpLbs request
+    response <- withManager tlsManagerSettings $ httpLbs request
     let
       (Ok result) = decode . toString $ responseBody response
       expiresIn' :: Rational
