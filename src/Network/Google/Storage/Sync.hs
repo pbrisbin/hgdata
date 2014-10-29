@@ -356,11 +356,11 @@ walkDirectories' eTags directory (y : ys) =
             status <- getSymbolicLinkStatus path
             return $ not directoryExists && not (isSymbolicLink status)
         handler :: a -> SomeException -> IO a
-        handler def exception =
+        handler d exception =
           do
             putStrLn $ "  LIST " ++ y
             putStrLn $ "    FAIL " ++ show exception
-            return def
+            return d
         makeMetadata :: FilePath -> IO (Maybe ObjectMetadata)
         makeMetadata file =
           handle
