@@ -37,7 +37,7 @@ import Network.Google (AccessToken, ProjectId, toAccessToken)
 import Network.Google.OAuth2 (OAuth2Client(..), OAuth2Tokens(..), refreshTokens, validateTokens)
 import Network.Google.Storage (BucketName, KeyName, MIMEType, StorageAcl, deleteObjectUsingManager, getBucketUsingManager, putObjectUsingManager)
 import Network.Google.Storage.Encrypted (putEncryptedObject, putEncryptedObjectUsingManager)
-import Network.HTTP.Client (closeManager, defaultManagerSettings, newManager)
+import Network.HTTP.Conduit (closeManager, conduitManagerSettings, newManager)
 import System.Directory (doesDirectoryExist, getDirectoryContents)
 import System.FilePath (combine, splitDirectories)
 import System.FilePath.Posix (joinPath)
@@ -82,7 +82,7 @@ sync projectId acl bucket client tokens directory recipients exclusions md5sums 
     let
       local' = filter (makeExcluder exclusions) local
     print $ length local - length local'
-    manager <- newManager defaultManagerSettings
+    manager <- newManager conduitManagerSettings
     finally
       (
         sync'
@@ -356,11 +356,11 @@ walkDirectories' eTags directory (y : ys) =
             status <- getSymbolicLinkStatus path
             return $ not directoryExists && not (isSymbolicLink status)
         handler :: a -> SomeException -> IO a
-        handler d exception =
+        handler def exception =
           do
             putStrLn $ "  LIST " ++ y
             putStrLn $ "    FAIL " ++ show exception
-            return d
+            return def
         makeMetadata :: FilePath -> IO (Maybe ObjectMetadata)
         makeMetadata file =
           handle

@@ -52,7 +52,7 @@ import Data.List.Split (splitOn)
 import Data.Maybe (fromJust, isNothing, maybe)
 import Network.Google (AccessToken, ProjectId, appendBody, appendHeaders, appendQuery, doManagedRequest, doRequest, makeProjectRequest)
 import Network.HTTP.Base (urlEncode)
-import Network.HTTP.Client (Manager, Request, queryString)
+import Network.HTTP.Conduit (Manager, Request, queryString)
 import Text.XML.Light (Element(elContent), QName(qName), filterChildName, ppTopElement, strContent)
 
 

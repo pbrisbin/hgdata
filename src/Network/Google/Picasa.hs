@@ -27,7 +27,7 @@ module Network.Google.Picasa (
 import Control.Monad (liftM)
 import Data.Maybe (mapMaybe)
 import Network.Google (AccessToken, ProjectId, doRequest, makeRequest)
-import Network.HTTP.Client (Request)
+import Network.HTTP.Conduit (Request)
 import Text.XML.Light (Element(elContent), QName(..), filterChildrenName, findChild, strContent)
 
 

@@ -91,8 +91,7 @@ library
                  , filepath          -any
                  , GenericPretty     >= 1.0.0
                  , HTTP              >= 4000.2.5
-                 , http-client       >= 0.4.2 && < 0.5
-                 , http-client-tls   >= 0.2 && < 0.3
+                 , http-conduit      >= 2.0 && < 2.2
                  , json              >= 0.5
                  , old-locale        -any
                  , pretty            -any
@@ -134,7 +133,7 @@ executable hgdata
                  , cmdargs           >= 0.9.4
                  , GenericPretty     >= 1.0.0
                  , HTTP              >= 4000.2.5
-                 , http-client       >= 0.4.2 && < 0.5
+                 , http-conduit      >= 2.0 && < 2.2
                  , json              >= 0.5
                  , network           -any
                  , old-locale        -any

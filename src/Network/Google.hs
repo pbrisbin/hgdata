@@ -46,8 +46,8 @@ import Data.ByteString.Lazy.UTF8 (toString)
 import Data.CaseInsensitive as CI (CI(..), mk)
 import Data.Default (Default(..))
 import Network.HTTP.Base (urlEncode)
-import Network.HTTP.Client (Manager, Request(..), RequestBody(..), Response(..), HttpException, 
-                            closeManager, defaultManagerSettings, httpLbs, newManager, responseBody)
+import Network.HTTP.Conduit (Manager, Request(..), RequestBody(..), Response(..), HttpException, 
+                             closeManager, conduitManagerSettings, httpLbs, newManager, responseBody)
 import Text.JSON (JSValue, Result(Ok), decode)
 import Text.XML.Light (Element, parseXMLDoc)
 
@@ -112,7 +112,7 @@ class DoRequest a where
     -> IO a                    -- ^ The action returning the result of performing the request.
   doRequest request =
     do
-      manager <- newManager defaultManagerSettings
+      manager <- newManager conduitManagerSettings
       E.finally
         (doManagedRequest manager request)
         (closeManager manager)

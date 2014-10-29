@@ -25,7 +25,7 @@ module Network.Google.Books (
 import Control.Monad (liftM)
 import Data.Maybe (fromMaybe)
 import Network.Google (AccessToken, appendQuery, doRequest, makeRequest)
-import Network.HTTP.Client (Request)
+import Network.HTTP.Conduit (Request)
 import Text.JSON (JSObject, JSValue(..), Result(Ok), decode, fromJSObject, toJSObject, valFromObj)
 
 

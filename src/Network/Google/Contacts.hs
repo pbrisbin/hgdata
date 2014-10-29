@@ -25,7 +25,7 @@ import Crypto.GnuPG (Recipient, decrypt, encrypt)
 import Data.List (stripPrefix)
 import Data.Maybe (fromJust, fromMaybe, mapMaybe)
 import Network.Google (AccessToken, doRequest, makeRequest, makeRequestValue)
-import Network.HTTP.Client (Request(..), httpLbs, responseBody, withManager)
+import Network.HTTP.Conduit (Request(..))
 import Text.XML.Light (Element, elChildren, filterChildName, parseXMLDoc, qName, strContent)
 
 
