@@ -27,10 +27,11 @@ import Control.Monad (liftM)
 import Data.ByteString.Char8 as BS8 (ByteString, pack, unpack)
 import Data.ByteString.Lazy.Char8 as LBS8 (ByteString, pack, unpack)
 import Data.ByteString.Lazy.UTF8 (fromString, toString)
+import Data.Default (Default(..))
 import Data.Maybe (fromJust)
 import Data.Time.Clock (getCurrentTime)
 import Network.Google (appendHeaders)
-import Network.HTTP.Conduit (CookieJar, Request(..), RequestBody(..), Response(..), def, httpLbs, parseUrl, withManager)
+import Network.HTTP.Client (CookieJar, Request(..), RequestBody(..), Response(..), defaultManagerSettings, httpLbs, parseUrl, withManager)
 import Text.XML.Light (Element(..), QName(..), blank_name, filterElement, findAttr, parseXMLDoc)
 
 
@@ -55,7 +56,7 @@ listBookmarks ::
 listBookmarks email password smsToken =
   do
     now <- getCurrentTime
-    withManager $ \manager -> do
+    withManager defaultManagerSettings $ \manager -> do
       requestGet1 <- parseUrl $ "https://accounts.google.com/Login?continue=" ++ listingUrl ++ "&hl=en&service=bookmarks&authuser=0"
       responseGet1 <- httpLbs requestGet1 manager
       let
@@ -112,7 +113,7 @@ listBookmarks email password smsToken =
       return $ responseXml responsePost3
 
 
-accountsPostRequest :: String -> Request m
+accountsPostRequest :: String -> Request
 accountsPostRequest path =
   appendHeaders [("Content-Type", "application/x-www-form-urlencoded")] $
   def {

@@ -1,5 +1,5 @@
 name: handa-gdata
-version: 0.6.9.1
+version: 0.6.9.2
 cabal-version: >=1.6
 
 -- CHANGELOG:
@@ -86,11 +86,12 @@ library
                  , binary            >= 0.5.1.1
                  , bytestring        >= 0.10.0.2
                  , case-insensitive  >= 0.2
+                 , data-default      -any
                  , directory         -any
                  , filepath          -any
                  , GenericPretty     >= 1.0.0
                  , HTTP              >= 4000.2.5
-                 , http-conduit      >= 1.9.0 && < 2.0
+                 , http-client       >= 0.4.2 && < 0.5
                  , json              >= 0.5
                  , old-locale        -any
                  , pretty            -any
@@ -126,12 +127,13 @@ executable hgdata
                  , binary            >= 0.5.1.1
                  , bytestring        >= 0.10.0.2
                  , case-insensitive  >= 0.2
+                 , data-default      -any
                  , directory         -any
                  , filepath          -any
                  , cmdargs           >= 0.9.4
                  , GenericPretty     >= 1.0.0
                  , HTTP              >= 4000.2.5
-                 , http-conduit      >= 1.9.0 && < 2.0
+                 , http-client       >= 0.4.2 && < 0.5
                  , json              >= 0.5
                  , network           -any
                  , old-locale        -any

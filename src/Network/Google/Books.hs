@@ -25,7 +25,7 @@ module Network.Google.Books (
 import Control.Monad (liftM)
 import Data.Maybe (fromMaybe)
 import Network.Google (AccessToken, appendQuery, doRequest, makeRequest)
-import Network.HTTP.Conduit (Request)
+import Network.HTTP.Client (Request)
 import Text.JSON (JSObject, JSValue(..), Result(Ok), decode, fromJSObject, toJSObject, valFromObj)
 
 
@@ -156,7 +156,7 @@ booksRequest ::
      AccessToken    -- ^ The OAuth 2.0 access token.
   -> Maybe ShelfId  -- ^ The bookshelf ID.
   -> Int            -- ^ The starting index
-  -> Request m      -- ^ The request.
+  -> Request        -- ^ The request.
 booksRequest accessToken shelf startIndex =
   appendQuery
     [

@@ -38,7 +38,7 @@ import           Data.List as L
 import qualified Data.ByteString.Char8 as B
 import qualified Data.ByteString.Lazy.Char8 as BL
 import           Network.Google (AccessToken, ProjectId, doRequest, makeRequest, appendBody, appendHeaders)
-import           Network.HTTP.Conduit (Request(..), RequestBody(..),parseUrl)
+import           Network.HTTP.Client (Request(..), RequestBody(..),parseUrl)
 import qualified Network.HTTP as H
 import           Text.XML.Light (Element(elContent), QName(..), filterChildrenName, findChild, strContent)
 

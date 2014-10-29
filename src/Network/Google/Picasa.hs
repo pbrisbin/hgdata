@@ -27,7 +27,7 @@ module Network.Google.Picasa (
 import Control.Monad (liftM)
 import Data.Maybe (mapMaybe)
 import Network.Google (AccessToken, ProjectId, doRequest, makeRequest)
-import Network.HTTP.Conduit (Request)
+import Network.HTTP.Client (Request)
 import Text.XML.Light (Element(elContent), QName(..), filterChildrenName, findChild, strContent)
 
 
@@ -111,7 +111,7 @@ picasaFeedRequest ::
      AccessToken    -- ^ The OAuth 2.0 access token.
   -> UserId         -- ^ The user ID for the photos.
   -> Maybe AlbumId  -- ^ The album ID for the photos.
-  -> Request m      -- ^ The request.
+  -> Request        -- ^ The request.
 picasaFeedRequest accessToken userId albumId =
   makeRequest accessToken picasaApi "GET"
     (

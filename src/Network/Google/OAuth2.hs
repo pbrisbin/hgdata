@@ -84,13 +84,14 @@ module Network.Google.OAuth2 (
 import Control.Monad  (unless)
 import Data.ByteString.Char8 as BS8 (ByteString, pack)
 import Data.ByteString.Lazy.UTF8 (toString)
+import Data.Default (Default(..))
 import Data.List (intercalate)
 import Data.Time.Clock       (getCurrentTime)
 import Data.Time.Clock.POSIX (utcTimeToPOSIXSeconds)
 import Data.Word (Word64)
 import Network.Google (makeHeaderName)
 import Network.HTTP.Base (urlEncode)
-import Network.HTTP.Conduit (Request(..), RequestBody(..), Response(..), def, httpLbs, responseBody, withManager)
+import Network.HTTP.Client (Request(..), RequestBody(..), Response(..), defaultManagerSettings, httpLbs, responseBody, withManager)
 import Text.JSON (JSObject, JSValue(JSRational), Result(Ok), decode, valFromObj)
 import System.Info    (os)
 import System.Process (rawSystem)
@@ -262,7 +263,7 @@ doOAuth2 client grantType extraBody =
             ++ "&grant_type=" ++ grantType
             ++ extraBody
         }
-    response <- withManager $ httpLbs request
+    response <- withManager defaultManagerSettings $ httpLbs request
     let
       (Ok result) = decode . toString $ responseBody response
     return result
@@ -284,7 +285,7 @@ validateTokens tokens =
         , path = BS8.pack "/oauth2/v1/tokeninfo"
         , queryString = BS8.pack ("?access_token=" ++ accessToken tokens)
         }
-    response <- withManager $ httpLbs request
+    response <- withManager defaultManagerSettings $ httpLbs request
     let
       (Ok result) = decode . toString $ responseBody response
       expiresIn' :: Rational

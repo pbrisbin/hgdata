@@ -37,7 +37,7 @@ import Network.Google (AccessToken, ProjectId, toAccessToken)
 import Network.Google.OAuth2 (OAuth2Client(..), OAuth2Tokens(..), refreshTokens, validateTokens)
 import Network.Google.Storage (BucketName, KeyName, MIMEType, StorageAcl, deleteObjectUsingManager, getBucketUsingManager, putObjectUsingManager)
 import Network.Google.Storage.Encrypted (putEncryptedObject, putEncryptedObjectUsingManager)
-import Network.HTTP.Conduit (closeManager, def, newManager)
+import Network.HTTP.Client (closeManager, defaultManagerSettings, newManager)
 import System.Directory (doesDirectoryExist, getDirectoryContents)
 import System.FilePath (combine, splitDirectories)
 import System.FilePath.Posix (joinPath)
@@ -82,7 +82,7 @@ sync projectId acl bucket client tokens directory recipients exclusions md5sums 
     let
       local' = filter (makeExcluder exclusions) local
     print $ length local - length local'
-    manager <- newManager def
+    manager <- newManager defaultManagerSettings
     finally
       (
         sync'

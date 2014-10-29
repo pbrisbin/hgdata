@@ -27,7 +27,7 @@ import Crypto.MD5 (MD5Info)
 import Data.ByteString.Lazy (ByteString)
 import Network.Google (AccessToken, ProjectId)
 import Network.Google.Storage (BucketName, KeyName, MIMEType, StorageAcl, getObject, getObjectUsingManager, putObject, putObjectUsingManager)
-import Network.HTTP.Conduit (Manager)
+import Network.HTTP.Client (Manager)
 
 
 -- | Downloads an object and decrypts it.
